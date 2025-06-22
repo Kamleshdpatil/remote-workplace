@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<conio.h>
+
+void Pattern(int iRow, int iCol)
+{
+	int i=0, j=0;
+	
+	for(i=1; i<=iRow; i++) //outer
+	{
+		for(j=1; j<=iCol; j++) //inner
+		{
+			if(i==1){
+			printf("%d\t",j);
+			}
+			else if(i==iRow){
+				printf("%d\t",j);
+			}
+			else if(j==1){
+				printf("%d\t",j);
+			}
+			else if(j==iCol){
+				printf("%d\t",j);
+			}else
+				printf("%9Kamlesh\t");
+			}
+		printf("\n");
+	}
+}
+
+int main()
+
+{
+	int iRow=0, iCol=0;
+	printf("Enter Row: ");
+	scanf("%d", &iRow);
+	printf("Enter Column: ");
+	scanf("%d", &iCol);
+	
+	Pattern(iRow, iCol);
+	
+	return 0;
+}
