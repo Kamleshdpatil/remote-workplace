@@ -1,0 +1,1 @@
+extern int iVar = 1000;
