@@ -1,0 +1,3 @@
+*.exe      			# all .exe files
+settings.json      	# settings.json
+*.bat				# all .bat files
