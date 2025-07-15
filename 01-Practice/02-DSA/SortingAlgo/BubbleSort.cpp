@@ -7,6 +7,7 @@ using namespace std;
 
 void BubbleSort(int*, int); 
 void BubbleSortOptimal(int*, int); 
+void BubbleSortOptimal2(int* brr, int size);
 
 // Driver code 
 int main() 
@@ -26,7 +27,8 @@ int main()
     
     cout<<"\nCalling Bubble Sort:---"<<endl;
     //BubbleSort(Arr, size);
-    BubbleSortOptimal(Arr, size);
+    // BubbleSortOptimal(Arr, size);
+    BubbleSortOptimal2(Arr, size);
 
     cout<<"\nOutput: ";
     for(int i = 0; i < size; i++)
@@ -45,7 +47,7 @@ void BubbleSort(int* brr, int size)
         return;
     for(int i = size - 1; i > 0; i--)
     {
-        for(int j =0; j < i; j++)
+        for(int j = 0; j < i; j++)
         {
             if(brr[j] > brr[j+1])
                 swap(brr[j], brr[j+1]);
@@ -79,3 +81,22 @@ void BubbleSortOptimal(int* brr, int size)
     // Time: O(N^2)
 } 
 
+void BubbleSortOptimal2(int* brr, int size)
+{
+    if(!(size > 1))
+        return;
+    for(int i = 0; i < size; i++){
+        bool isSwapped = false;
+        
+        for(int j = i + 1; j < size; j++){
+            if(brr[i] > brr[j]){
+                swap(brr[i], brr[j]);
+                isSwapped = true;
+            }
+        }
+        if(!isSwapped)
+            break;
+    }
+
+    // Time: O(N^2)
+} 

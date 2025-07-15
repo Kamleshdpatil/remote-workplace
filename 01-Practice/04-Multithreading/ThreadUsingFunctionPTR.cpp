@@ -16,7 +16,6 @@ void DisplayElements(int endelement)
     }
 }
 
-
 typedef void (*FPTR)(int);
 // void 
 

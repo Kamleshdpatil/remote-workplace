@@ -31,10 +31,20 @@ int convertBinaryToDecimal(string binary)
     return num;
 }
 
+void swapTwoNumbers(int& a, int& b){
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
+}
+
 int main()
 {
-    string str = convertDecimalToBinary(13);
-    cout<<"Binary: "<<str<<endl;
-    cout<<"Decimal: "<<convertBinaryToDecimal(str)<<endl;
+    // string str = convertDecimalToBinary(13);
+    // cout<<"Binary: "<<str<<endl;
+    // cout<<"Decimal: "<<convertBinaryToDecimal(str)<<endl;
+    
+    int a = 100, b = 200;
+    swapTwoNumbers(a, b);
+    cout<<"a: "<<a<<" b: "<<b<<endl;
     return 0;
 }

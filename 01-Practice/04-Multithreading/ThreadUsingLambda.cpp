@@ -35,5 +35,6 @@ int main(void)
      // Wait for the thread to finish
     threadObj1.join();
 
+    std::terminate();
     return(0);
 }
