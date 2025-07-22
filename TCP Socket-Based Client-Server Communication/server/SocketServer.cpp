@@ -8,8 +8,9 @@ using namespace std;
 // Global variables
 struct sockaddr_in srv;
 struct fd_set fr, fw, fe; // To Read, Write, exceptions/error logs
-// fd_set is is having:- 1) u_int fd_count- number of file descriptors which we are going to set in this structure
-// 2) SOCKET fd_array[FD_SETSIZE] - at here we are going to set our socket(s) - It can contain 64 Sockets
+            // fd_set is is having:- 
+            // 1) u_int fd_count- number of file descriptors which we are going to set in this structure
+            // 2) SOCKET fd_array[FD_SETSIZE] - at here we are going to set our socket(s) - It can contain 64 Sockets
 int nMaxFd;
 int nSocket;
 int nArrClient[5];
@@ -23,6 +24,7 @@ void ProcessNewMessage(int nClientSocket)
     {
         cout <<endl<<"Something wrong happened at client socket: "<<nClientSocket<< endl;
         closesocket(nClientSocket);
+        cout <<endl<<"Client terminated:-> "<<nClientSocket<< endl<< endl;
         for(int nIndex = 0; nIndex < 5; nIndex++)
         {
             if(nArrClient[nIndex] == nClientSocket)
@@ -33,24 +35,36 @@ void ProcessNewMessage(int nClientSocket)
         }
     }
     else{
-        cout <<endl<<"New message recieved from client is: "<<buff;
-        // Send response to client
-        send(nClientSocket, "Pocessed your request !!", 23, 0);
+        cout <<endl<<"New message recieved from Client is: "<<buff;
+        // // Send response to client
+        char send_buff[256 + 1] = { 0, };
+        cout<<endl<< "Send your message to Client: ";
+        fgets(send_buff, 256, stdin);
+        send(nClientSocket, send_buff, 256, 0);
+        // send(nClientSocket, "Pocessed your request !!", 23, 0);
         cout<<endl<<"*************************************************************"<<endl;
     }
 }
 
 void ProcessTheNewRequest()
 {
-    // New Connection request
-    if(FD_ISSET(nSocket, &fr))
+    int nLen = sizeof(struct sockaddr);
+    int nClientSocket = accept(nSocket, NULL, &nLen);
+    if (nClientSocket > 0)
     {
-        int nLen = sizeof(struct sockaddr);
-        int nClientSocket = accept(nSocket, NULL, &nLen);
-        if(nClientSocket > 0)
+        // Put it into the client list
+        for (int nIndex = 0; nIndex < 5; nIndex++)
         {
-
+            if (nArrClient[nIndex] == 0)
+            {
+                nArrClient[nIndex] = nClientSocket;
+                send(nClientSocket, "Got the connection done Successfully.", 37, 0);
+                cout<< endl << "New client connected. Socket ID: " << nClientSocket << endl;
+                return;
+            }
         }
+        cout<< endl<< endl << "No space for a new connection" << endl<< endl;
+        closesocket(nClientSocket);
     }
 }
 
@@ -58,7 +72,7 @@ int main(void)
 {
     // Local variables
     int nRet = 0;
-    cout <<endl<<"---------!!  Server Program Started Running  !!---------"<< endl;
+    cout <<endl<<"---------!!!  Server Program Started Running  !!!---------"<< endl;
 
     // Initilize the WSA variables - Windows Socket API's
     WSADATA wsData;
@@ -84,17 +98,21 @@ int main(void)
     srv.sin_addr.s_addr = INADDR_ANY; // inet_addr("127.0.0.1"); <-- can be used instead
     memset(&(srv.sin_zero), 0, 8);
 
-    // // About the Blocking vs Non-Blocking sockets - By defualt all sockets are blocking sockets
-    // // optval = 0 means blocking and != 0 means non blocking
-    // // FIONBIO - set/clear non-blocking i/o
-    // u_long optval = 1;
-    // nRet = ioctlsocket(nSocket, FIONBIO, &optval); // Help a socket to set a socket blocking or non-blocking.
-    // if (nRet != 0)
-    // {
-    //     cout << "ioctlsocket call failed !!"<< endl;
-    //     // WSACleanup();
-    //     // exit(EXIT_FAILURE);
-    // }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // About the Blocking vs Non-Blocking sockets - By defualt all sockets are blocking sockets
+    /*
+    // optval = 0 means blocking and != 0 means non blocking
+    // FIONBIO - set/clear non-blocking i/o
+    u_long optval = 1;
+    nRet = ioctlsocket(nSocket, FIONBIO, &optval); // Help a socket to set a socket blocking or non-blocking.
+    if (nRet != 0)
+    {
+        cout << "ioctlsocket call failed !!"<< endl;
+        // WSACleanup();
+        // exit(EXIT_FAILURE);
+    }
+    */
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // setsockopt call
     int nOptVal = 0;
@@ -126,9 +144,12 @@ int main(void)
     }
 
     nMaxFd = nSocket;     // + 1 for select() system call to store in struct of fd
-    struct timeval timeValue; // To wait how much time to see any of the fd is ready
-    timeValue.tv_sec = 1;
-    timeValue.tv_usec = 0;
+    nMaxFd = nSocket;
+    for (int i = 0; i < 5; i++) {
+        if (nArrClient[i] > nMaxFd) {
+            nMaxFd = nArrClient[i];
+        }
+    }
     
     while (1)
     {
@@ -139,12 +160,25 @@ int main(void)
         FD_SET(nSocket, &fr); // Must to Set FD before select system call
         FD_SET(nSocket, &fe);
 
+        for (int i = 0; i < 5; i++) {
+            if (nArrClient[i] > 0) {
+                FD_SET(nArrClient[i], &fr);
+                FD_SET(nArrClient[i], &fe);
+                if (nArrClient[i] > nMaxFd) {
+                    nMaxFd = nArrClient[i];
+                }
+            }
+        }
+
+        struct timeval timeValue; // To wait how much time to see any of the fd is ready
+        timeValue.tv_sec = 2;
+        timeValue.tv_usec = 50;
+
         // Keep waiting for new requests and proceed as per the request
-        nRet = select(nMaxFd + 1, &fr, &fw, &fe, &timeValue); // To wait foer all these socket descreptors
+        nRet = select(nMaxFd + 1, &fr, &fw, &fe, &timeValue); // To wait for all these socket descreptors
         if (nRet > 0)
         {
             // When someone connects or communicates with a message over a dedicated connection
-            cout << "Data on port...Processing now ...."<< endl;
             // Process the request..
             if(FD_ISSET(nSocket, &fe))
             {
@@ -158,8 +192,17 @@ int main(void)
             {
                 //cout<<"Ready to read something new came up.."<<endl;
                 // Accept the connection
+                ProcessTheNewRequest();
             }
             // break;
+            // Also check if existing clients sent data
+            for (int nIndex = 0; nIndex < 5; nIndex++)
+            {
+                if (nArrClient[nIndex] > 0 && FD_ISSET(nArrClient[nIndex], &fr))
+                {
+                    ProcessNewMessage(nArrClient[nIndex]);  // Handle client message
+                }
+            }
         }
         else if (nRet == 0)
         {
@@ -169,10 +212,11 @@ int main(void)
         else{
             cout<< endl <<"Server started to listen...."<< endl;
         }
+        cout << "Waiting for client request... " << endl;
     }
 
     // Exit the program
-    cout<< endl <<"---------!!  Server Program Stopped  !!---------"<< endl;
+    cout<< endl <<"---------!!!  Server Program Stopped  !!!---------"<< endl;
     WSACleanup(); // To does all necessary resource deallocation for the task.
     return 0;
 }
