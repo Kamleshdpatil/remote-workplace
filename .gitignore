@@ -4,6 +4,9 @@ settings.json      	# settings.json
 Build.bat			# all .bat files
 .vscode
 
+# Log files
+*.log      			# all .log files
+
 # Prerequisites
 *.d
 
