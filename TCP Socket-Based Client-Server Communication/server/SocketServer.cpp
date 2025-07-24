@@ -1,5 +1,7 @@
 #include <iostream>
 #include <winsock.h> // Need to add wsock32.lib while linking the program
+#include "../logger/logger.h"
+
 using namespace std;
 
 // Macros
@@ -15,16 +17,22 @@ int nMaxFd;
 int nSocket;
 int nArrClient[5];
 
+Logger logger("server_log.log");
+
 void ProcessNewMessage(int nClientSocket)
 {
-    cout <<endl<<"Processing the new message for client socket: "<<nClientSocket<< endl;
+    logger.log(INFO_, string("Inside the start of ") + __func__);
+    // cout <<endl<<"Processing the new message for client socket: "<<nClientSocket<< endl;
+
     char buff[256 + 1] = { 0, };
     int nRet = recv(nClientSocket, buff, 256, 0);
     if(nRet < 0)
     {
         cout <<endl<<"Something wrong happened at client socket: "<<nClientSocket<< endl;
+        logger.log(ERROR_, string("Something wrong happened at client socket: %d", nClientSocket));
         closesocket(nClientSocket);
         cout <<endl<<"Client terminated:-> "<<nClientSocket<< endl<< endl;
+        logger.log(INFO_, string("Client terminated:-> ", nClientSocket));
         for(int nIndex = 0; nIndex < 5; nIndex++)
         {
             if(nArrClient[nIndex] == nClientSocket)
@@ -44,11 +52,15 @@ void ProcessNewMessage(int nClientSocket)
         // send(nClientSocket, "Pocessed your request !!", 23, 0);
         cout<<endl<<"*************************************************************"<<endl;
     }
+    logger.log(INFO_, string("Inside the end of ") + __func__);
 }
 
 void ProcessTheNewRequest()
 {
     int nLen = sizeof(struct sockaddr);
+
+    logger.log(INFO_, string("Inside the start of ") + __func__);
+
     int nClientSocket = accept(nSocket, NULL, &nLen);
     if (nClientSocket > 0)
     {
@@ -59,13 +71,15 @@ void ProcessTheNewRequest()
             {
                 nArrClient[nIndex] = nClientSocket;
                 send(nClientSocket, "Got the connection done Successfully.", 37, 0);
-                cout<< endl << "New client connected. Socket ID: " << nClientSocket << endl;
+                cout<< endl << "New client connected with Socket ID: " << nClientSocket << endl;
                 return;
             }
         }
         cout<< endl<< endl << "No space for a new connection" << endl<< endl;
+        logger.log(ERROR_, string("No space for a new connection"));
         closesocket(nClientSocket);
     }
+    logger.log(INFO_, string("Inside the end of ") + __func__);
 }
 
 int main(void)
@@ -73,21 +87,24 @@ int main(void)
     // Local variables
     int nRet = 0;
     cout <<endl<<"---------!!!  Server Program Started Running  !!!---------"<< endl;
-
+    logger.log(INFO_, string("---------!!!  Server Program Started Running  !!!---------"));
+    
     // Initilize the WSA variables - Windows Socket API's
     WSADATA wsData;
     if (WSAStartup(MAKEWORD(2, 2), &wsData) < 0)
     {
         cout << "WSA Failed to initilize!"<< endl;
+        logger.log(ERROR_, string("WSA Failed to initilize!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
-
+    
     // Initilize the socket
     nSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); // AF_INET -> for inter network, SOCK_STREAM -> connection oriented socket
     if (nSocket < 0)
     {
         cout << "The socket not opened!"<< endl;
+        logger.log(ERROR_, string("The socket not opened!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
@@ -121,24 +138,27 @@ int main(void)
     if (nRet != 0)
     {
         cout << "Fail to set socket options!"<< endl;
+        logger.log(ERROR_, string("Fail to set socket options!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
-
+    
     // Bind the socket to the local port. Excluding: (0 - 256)
     nRet = bind(nSocket, (sockaddr *)&srv, sizeof(sockaddr));
     if (nRet < 0)
     {
         cout << "Fail to bind the Local port!"<< endl;
+        logger.log(ERROR_, string("Fail to bind the Local port!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
-
+    
     // Listen the request from client (queues the requests)
     nRet = listen(nSocket, 5); // 5(Backlog) --> ? Which tells you how many rquests can be there in a active queue.
     if (nRet < 0)
     {
         cout << "Fail to start listen to the Local port!"<< endl;
+        logger.log(ERROR_, string("Fail to start listen to the Local port!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
@@ -171,7 +191,7 @@ int main(void)
         }
 
         struct timeval timeValue; // To wait how much time to see any of the fd is ready
-        timeValue.tv_sec = 2;
+        timeValue.tv_sec = 3;
         timeValue.tv_usec = 50;
 
         // Keep waiting for new requests and proceed as per the request
@@ -217,6 +237,7 @@ int main(void)
 
     // Exit the program
     cout<< endl <<"---------!!!  Server Program Stopped  !!!---------"<< endl;
+    logger.log(INFO_, string("---------!!!  Server Program Stopped  !!!---------"));
     WSACleanup(); // To does all necessary resource deallocation for the task.
     return 0;
 }

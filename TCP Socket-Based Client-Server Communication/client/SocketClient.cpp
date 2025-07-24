@@ -1,5 +1,6 @@
 #include <iostream>
 #include <winsock.h> // Need to add wsock32.lib while linking the program
+#include "../logger/logger.h"
 using namespace std;
 
 // Macros
@@ -9,10 +10,12 @@ using namespace std;
 int nClientSocket;
 struct sockaddr_in srv;
 
+Logger logger("client_log.log");
+
 int main(void)
 {
     cout <<endl<<"---------!!!  Client Program Started Running  !!!---------"<< endl;
-
+    logger.log(INFO_, string("---------!!!  Client Program Started Running  !!!---------"));
     // Local variables
     int nRet = 0;
 
@@ -21,6 +24,7 @@ int main(void)
     if (WSAStartup(MAKEWORD(2, 2), &wsData) < 0)
     {
         cout << "WSA Failed to initilize..!!"<< endl;
+        logger.log(ERROR_, string("WSA Failed to initilize..!!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
@@ -30,6 +34,7 @@ int main(void)
     if (nClientSocket < 0)
     {
         cout << "The socket not opened!"<< endl;
+        logger.log(ERROR_, string("The socket not opened!"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }
@@ -45,10 +50,12 @@ int main(void)
     if (nRet < 0)
     {
         cout << "Fail to connect to Server !!"<< endl;
+        logger.log(ERROR_, string("Fail to connect to Server"));
         WSACleanup();
         exit(EXIT_FAILURE);
     }else{
         cout<<endl << "Connected to Server..."<< endl;
+        logger.log(INFO_, string("Connected to Server..."));
         char buff[256 + 1] = { 0, };
         // recv(nClientSocket, buff, 256, 0);
         int nBytes = recv(nClientSocket, buff, 256, 0);
@@ -58,6 +65,9 @@ int main(void)
         } else {
             cout << endl<< "No welcome message received from server." << endl;
         }
+
+        logger.log(INFO_, string("Communication started!!"));
+
         while (1)
         {
             cout<<endl<< "Send your message to Server: ";
@@ -73,17 +83,20 @@ int main(void)
                 cout<<endl<< "Server reply: " << buff;
             } else if (nRet == 0) {
                 cout<<endl<< "Server closed the connection."<<endl;
+                logger.log(INFO_, string("Server closed the connection."));
                 break;
             } else {
                 cout<<endl<< "Error receiving data from server."<<endl;
+                logger.log(INFO_, string("Error receiving data from server."));
                 break;
             }
             cout<<endl<<"*************************************************************"<<endl;
         }
     }
-
+    
     // Exit the program
     cout<< endl <<"---------!!!  Client Program Stopped  !!!---------"<< endl;
+    logger.log(INFO_, string("---------!!!  Client Program Stopped  !!!---------"));
     WSACleanup(); // To does all necessary resource deallocation for the task.
     return 0;
 }
