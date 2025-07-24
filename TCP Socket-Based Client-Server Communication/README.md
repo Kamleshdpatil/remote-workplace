@@ -17,6 +17,7 @@ It consists of:
   - Connects to server
   - Receives welcome message (`"Got the connection done Successfully."`)
   - Sends messages and prints replies interactively
+  - Implement Logging mechanism to get the logs of each steps.
 
 ---
 
@@ -161,10 +162,9 @@ Waiting for client request...
 
 ## ✅ Future Improvements
 
-- Implement **auto-replies** (no need for manual typing on the server)
 - Add **threading** for a more interactive chat (server operator + multiple clients simultaneously)
 - Support **broadcast messages** to all clients  
-
+- Implement **auto-replies** (no need for manual typing on the server)
 ---
 
 Enjoy chatting between server & clients on Windows! 🎉
@@ -174,7 +174,5 @@ Enjoy chatting between server & clients on Windows! 🎉
 
 ## 🙌 Author  
 **Kamlesh Dugade**  
-
-📧 **Email:** [kamleshdpatil777@gmail.com](mailto:kamleshdpatil777@gmail.com)  
-
-💻 Developed with ❤️ using C++ & Winsock  
+📧 Email: kamleshdpatil777@gmail.com
+💻 Developed with ❤️ using C++ & Winsock.
