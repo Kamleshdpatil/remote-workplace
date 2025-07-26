@@ -3,7 +3,7 @@
 
 using namespace std;
 
-auto DisplayElements = [](int endelement)
+void DisplayElements(int endelement)
 {
     int startElement = 0;
     for(int i = startElement +1; i <= endelement; i++)
@@ -14,27 +14,29 @@ auto DisplayElements = [](int endelement)
             cout<<endl;
         }
     }
-};
+}
+
+typedef void (*FPTR)(int);
+// void 
 
 int main(void)
 {
+    // Using typedef
+    // Way 1.
+    FPTR FP1 = DisplayElements;
+    //thread theadObj(FP1, 20);
+
+    // Way 2.
+    FPTR FP2 = &DisplayElements;
+    //thread theadObj(FP2, 20);
+    
+    // Way 3
+    // Using Function name as a pointer
     thread theadObj(DisplayElements, 20);
     if(theadObj.joinable())
     {
         theadObj.join();
     }
 
-
-    // Create a Thread from Lambda function
-    std::thread threadObj1([]() {
-        for(int i = 0; i < 5; ++i) {
-            std::cout << "Display Thread Executing" << std::endl;
-        }
-    });
-
-     // Wait for the thread to finish
-    threadObj1.join();
-
-    std::terminate();
     return(0);
 }

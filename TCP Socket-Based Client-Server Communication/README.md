@@ -172,6 +172,21 @@ Enjoy chatting between server & clients on Windows! 🎉
 
 ---
 
+## My Notes:
+
+I’ve reviewed your updated client code. It already:
+
+✅ Logs all major events
+✅ Detects when the server closes (recv() == 0)
+✅ Prints error if it can’t connect
+
+But it doesn’t yet:
+
+- Detect server unavailability with a timeout during connect() (if the server isn’t running, it may block a long time)
+- Handle unexpected server crash more gracefully (right now it only detects when the next recv() fails)
+- Have retry logic (optional)
+-------------------------------------
+
 ## 🙌 Author  
 **Kamlesh Dugade**  
 📧 Email: kamleshdpatil777@gmail.com

@@ -6,6 +6,7 @@ using namespace std;
 class DisplayElements
 {
     public:
+    void fun(){cout<<endl<<"Inside fun";}
     void operator()(int endelement)
     {
         int startElement = 0;
@@ -24,16 +25,17 @@ class DisplayElements
 
 int main(void)
 {
-    thread theadObj(DisplayElements(), 20);
-    if(theadObj.joinable())
-    {
-        cout<<"Inside theadObj"<<endl;
-        theadObj.join();
-    }
+    // thread theadObj(DisplayElements(), 20);
+    // if(theadObj.joinable())
+    // {
+    //     cout<<"Inside theadObj"<<endl;
+    //     theadObj.join();
+    // }
 
 
     //thread t = move(theadObj);
-    thread t(DisplayElements(), 10);
+    DisplayElements obj;
+    thread t(obj, 10);
     
     if(t.joinable())
     {
