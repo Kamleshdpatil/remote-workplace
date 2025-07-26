@@ -20,9 +20,9 @@ class Base
     }
 };
 
-void thread_function()
+void thread_function(int num)
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < num; i++)
     {
         std::cout << "thread function Executing" << std::endl;
     }
@@ -40,7 +40,7 @@ int main(void)
     cout<<endl;
     cout<<endl;
 
-    thread thread1(thread_function);
+    thread thread1(thread_function, 10);
     if(thread1.joinable())
     {
         thread1.join();
