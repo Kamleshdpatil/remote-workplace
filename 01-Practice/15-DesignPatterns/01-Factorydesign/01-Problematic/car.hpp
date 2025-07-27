@@ -1,7 +1,7 @@
 #ifndef CAR_HPP
 #define CAR_HPP
 
-#include "../01-Factorydesign/vehicle.hpp"
+#include "vehicle.hpp"
 
 class Car: public Vehicle{
     public:
