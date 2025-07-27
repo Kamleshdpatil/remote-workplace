@@ -1,6 +1,6 @@
 #include<iostream>
-#include"../01-Factorydesign/bike.hpp"
-#include"../01-Factorydesign/car.hpp"
+#include"bike.hpp"
+#include"car.hpp"
 
 using namespace std;
 
