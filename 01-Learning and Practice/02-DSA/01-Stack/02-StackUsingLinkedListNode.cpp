@@ -9,10 +9,7 @@ class Node
     int data;
     Node* link;
     Node(){}
-    Node(int n): data(n)
-    {
-        //cout<<"Stack Node created, with value: "<<data<<endl;
-    }
+    Node(int n): data(n), link(nullptr){}
 };
 
 class Stack
@@ -24,28 +21,45 @@ class Stack
     {
         cout<<"Stack created !!"<<endl;
     }
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
 
     void Push(int);
     int Pop();
-    int Peek();
-    bool IsEmpty();
-    void Display();
+    int Peek() const;
+    bool IsEmpty() const;
+    void Display() const;
+    ~Stack();
 };
 
 
 int main(void)
 {
-    Stack stack;
-    
-    for(int i = 1; i<=5; i++)
+    try
     {
-        stack.Push(10*i);
+        Stack stack;
+        
+        for(int i = 1; i<= 5; i++)
+        {
+            stack.Push(10*i);
+        }
+
+        stack.Display();
+        cout<<"Peek stack: "<<stack.Peek()<<endl;
     }
-
-    stack.Display();
-    cout<<"Peek stack: "<<stack.Peek()<<endl;
-
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     return(0);
+}
+
+Stack::~Stack(){
+    if(top){
+        while(NULL != top) { 
+            Pop();
+        } 
+    }
 }
 
 void Stack::Push(int data)
@@ -67,8 +81,7 @@ int Stack::Pop()
 {
     if(IsEmpty())
     {
-        cout<<"\nStack Underflow"<<endl;
-        exit(1);
+        throw std::underflow_error("Stack Underflow on Pop()");
     }
     Node* temp = top;
     top = top->link;
@@ -77,34 +90,34 @@ int Stack::Pop()
     return popped;
 }
 
-int Stack::Peek()
+int Stack::Peek() const
 {
+    if(IsEmpty()) {
+        cout<<"\nStack Underflow"<<endl;
+        return(-1);
+    }
     return top->data;
 }
 
-bool Stack::IsEmpty()
+bool Stack::IsEmpty() const
 {
     return NULL == top;
 }
 
-void Stack::Display()
+void Stack::Display() const
 {
     cout<<endl;
     if(IsEmpty())
     {
-        cout<<"\nStack Underflow"<<endl;
-        exit(1);
+        throw std::underflow_error("Stack Underflow on Display()");
     }
     else
     {
-        Node* temp;
-        temp = top;
+        Node* temp = top;
         while(NULL != temp) 
         { 
             // print top element in stack 
             cout << temp->data <<" ->"; 
-            // remove top element in stack 
-            //Pop(&root); 
             temp = temp->link;
         } 
     }
