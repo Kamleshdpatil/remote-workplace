@@ -3,14 +3,31 @@
 using namespace std;
 
 typedef class Node{
+    private:
     public:
     int data;
     Node* pNext;
+    
+    Node(int x = 0):data(x), pNext(nullptr){}
+    Node(const Node& newNode) { // Copy constructor
+        this->data = newNode.data;
+        this->pNext = newNode.pNext ? new Node(*newNode.pNext) : nullptr;
+    }
+    Node& operator=(const Node& newNode) { // Assignemnt operator overloading
+        if(this != &newNode){
+            delete this->pNext;
+            this->data = newNode.data;
+            this->pNext = newNode.pNext ? new Node(*newNode.pNext) : nullptr;
+        }
 
-    Node(int x = 0):data(x){}
-    Node(const Node& newNode){cout<<"\nCopy constructor called!!"<<endl;}
-    private:
-    ~Node(){}
+        return *this;
+    }
+
+    ~Node(){
+        if(pNext){
+            delete pNext;
+        }
+    }
     
 }NODE, *PNODE, **PPNODE;
 

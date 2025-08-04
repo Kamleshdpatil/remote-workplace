@@ -1,31 +1,39 @@
 #include<iostream>
-#include<cstdlib>
 
 using namespace std;
-#define MAX 20 
 
 class Stack
 {
     int top;
+    int *Data;
+    int size;
 
     public:
-    int Data[MAX];
-    Stack():top(-1)
+    Stack(int size_s = 0):top(-1), size(size_s)
     {
+        Data = new int[size];
         cout<<"Stack created !!"<<endl;
     }
 
     void Push(int);
     void Pop();
-    int GetSize();
-    bool IsEmpty();
-    bool IsFull();
+    int Peek() const;
+    int GetSize() const;
+    bool IsEmpty() const;
+    bool IsFull() const;
+    virtual ~Stack(){
+        delete [] Data;
+    }
 };
 
 
 int main(void)
 {
-    Stack stack;
+    int stackSize;
+    cout<<"Enter the size to create the stack: ";
+    cin>>stackSize;
+
+    Stack stack(stackSize);
 
     cout<<"Before Push Size of stack is: "<<stack.GetSize()<<endl;
 
@@ -39,7 +47,20 @@ int main(void)
     stack.Pop();
 
     cout<<"After pop Size of stack is: "<<stack.GetSize()<<endl;
-    return(0);
+
+    cout<<"Top element is: "<<stack.Peek();
+    return 0;
+}
+
+int Stack::Peek() const
+{
+    if(IsEmpty())
+    {
+        cout<<"Stack is empty. Nothing to peek.\n"<<endl;
+        return -1;
+    }
+    
+    return Data[top];
 }
 
 void Stack::Push(int element)
@@ -62,20 +83,17 @@ void Stack::Pop()
         return;
     }
 
-    cout<<"Element poped: "<<Data[top]<<endl;
-    Data[top] = Data[top--];
-
-    return;
+    cout<<"Element poped: "<<Data[top--]<<endl;
 }
 
 
-int Stack::GetSize()
+int Stack::GetSize() const
 {
     return(top + 1);
 }
 
 
-bool Stack::IsEmpty()
+bool Stack::IsEmpty() const
 {
     if(top < 0)
         return true;
@@ -84,9 +102,9 @@ bool Stack::IsEmpty()
 }
 
 
-bool Stack::IsFull()
+bool Stack::IsFull() const
 {
-    if(top == MAX -1)
+    if(top == (size - 1))
         return true;
     else
         return false;

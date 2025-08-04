@@ -50,7 +50,6 @@ int main(void)
     return(0);
 }
 
-
 Stack* CreateStack(int size)
 {
     Stack* stack = (Stack*)malloc(size * sizeof(int));
@@ -69,7 +68,6 @@ void DeleteStack(Stack* stack)
     stack = NULL;
 }
 
-
 void Push(Stack* stack, int element)
 {
     if(IsFull(stack))
@@ -80,7 +78,6 @@ void Push(Stack* stack, int element)
     else
         stack->data[++stack->top] = element;
 }
-
 
 int Pop(Stack* stack)
 {
@@ -93,7 +90,6 @@ int Pop(Stack* stack)
         return stack->data[stack->top--];
 }
 
-
 int GetSize(Stack* stack)
 {
     if(IsEmpty(stack))
@@ -102,7 +98,6 @@ int GetSize(Stack* stack)
         return stack->top + 1;
 }
 
-
 bool IsEmpty(Stack* stack)
 {
     if(stack->top < 0)
@@ -110,7 +105,6 @@ bool IsEmpty(Stack* stack)
     else
         return false;
 }
-
 
 bool IsFull(Stack* stack)
 {
