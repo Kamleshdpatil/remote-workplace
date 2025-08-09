@@ -13,7 +13,7 @@ Logger::Logger()
     cout<<"Instnace cretaed. No. of Instance: "<<counter<<endl;
 }
 
-Logger* Logger::getInstance(){
+Logger* Logger::getLoggerInstance(){
     if(logger == nullptr){
         mtx.lock();
         if(logger == nullptr){
