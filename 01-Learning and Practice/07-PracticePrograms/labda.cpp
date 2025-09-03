@@ -8,13 +8,13 @@ int ()[int x]
 }
 
 
-git clone ""
+// git clone ""
 
-git chekout -b NewBranch
+// git chekout -b NewBranch
 
-git commit -m "ll"
+// git commit -m "ll"
 
-git push : 
+// git push : 
 
 
 int main(void)

@@ -33,10 +33,11 @@ void run(int count){
 int main(){
     thread t1(run, 10);
     cout<<"Main()"<<endl;
-    std::this_thread::sleep_for(chrono::seconds(5));
+    std::this_thread::sleep_for(chrono::seconds(2));
     cout<<"calling join()"<<endl;
     
     t1.join();
+    // t1.detach();
     cout<<"After join join()"<<endl;
 
     cout<<endl<<"Main() after join()"<<endl;
