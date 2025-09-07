@@ -10,7 +10,7 @@ using namespace std;
 int nClientSocket;
 struct sockaddr_in srv;
 
-Logger logger("client_log.log");
+Logger& logger = Logger::getLoggerInstance("client_log.log");
 
 int main(void)
 {

@@ -6,7 +6,9 @@
 
 using namespace std;
 
-void Logger::log(LogLevel level, const string& message){
+void Logger::log(LogLevel level, const string& message) {
+    lock_guard<mutex> lock(mtx); // ensures only one thread logs at a time
+
     // Get current timestamp
     time_t now = time(0);
     tm* timeinfo = localtime(&now);
@@ -27,7 +29,7 @@ void Logger::log(LogLevel level, const string& message){
         logFile.flush(); // Ensure immidiate write to file
     }
 }
-string Logger::levelToString(LogLevel level){
+string Logger::levelToString(LogLevel level) const{
     switch (level)
     {
     case DEBUG_:
