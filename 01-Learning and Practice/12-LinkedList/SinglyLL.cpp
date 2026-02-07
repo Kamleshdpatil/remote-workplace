@@ -152,9 +152,11 @@ bool checkIntersectionParellaly(ListNode* headA, ListNode* headB, int place)
 {
     ListNode* tempA = headA;
     ListNode* tempB = headB;
-    for(int i = 0; i < place; i++)
-    {
-        tempA = tempA->next;
+    if(place > 0){
+        for(int i = 0; i < place; i++)
+        {
+            tempA = tempA->next;
+        }
     }
 
     while (tempA && tempB)
@@ -236,10 +238,128 @@ ListNode* getMiddleNodeOfLinkedList(ListNode* head)
     return NULL;
 }
 
+ListNode* reverseBetween(ListNode* head, int left, int right) {
+    if(!head) return nullptr;
+    if(left == right) return head;
+
+    ListNode* temp = head;
+    ListNode* prev = nullptr;
+    int counter = 1;
+    while(temp && counter < left)
+    {
+        prev = temp;
+        // cout<<"prev: "<<prev->val<<" ";
+        temp = temp->next;
+        // cout<<"temp: "<<temp->val<<endl;
+        ++counter;
+        // cout<<"counter: "<<counter<<endl;
+        // if(counter == left)
+        //     break;
+    }
+    cout<<"prev: "<<prev->val<<endl;
+    cout<<"temp: "<<temp->val<<endl;
+
+    ListNode* current = temp;
+    ListNode* next = nullptr;
+    ListNode* revPrev = nullptr;
+
+    ListNode* connection = prev;   // to reconnect later
+    ListNode* tail = temp;         // will become tail of reversed part
+
+    while(current && counter <= right)
+    {
+        cout<<"current: "<<current->val<<endl;
+        next = current->next;
+        cout<<"next: "<<next->val<<endl;
+        current->next= revPrev;
+        revPrev = current;
+        current = next;
+
+        ++counter;
+    }
+    
+    // Reconnect
+    if(connection) {
+        connection->next = revPrev;
+    } else {
+        head = revPrev;   // if left == 1, new head is revPrev
+    }
+    tail->next = current;
+
+    bool bRet = isCyclicLinkedListFound(head);
+    if(bRet){
+        cout<<"Cyclic"<<endl;
+        return nullptr;
+    }
+    return head;
+}
+
+int getSize(ListNode* head)
+{
+    ListNode* temp = head;
+    int size = 0;
+    while(temp != nullptr)
+    {
+        size++;
+        temp = temp->next;
+    }
+    return size;
+}
+
+ListNode* deleteAtPos(ListNode* head, int pos){ // data: 1-> 2 -> 3 -> 4
+    if(head == nullptr){
+        return nullptr;
+    }else{
+        if(head->next == nullptr)
+        {
+            delete head;
+            return nullptr;
+        }
+        else{
+            
+            ListNode* temp = head; // 1
+            ListNode* prev = nullptr;
+            int counter = 1;
+            while(temp != nullptr)
+            {
+                if(counter == pos){
+                    cout<<"counter: "<<counter<<endl;
+                    break;
+                }
+                prev = temp; // 3
+                temp = temp->next; // 4
+                cout<<"counter: "<<counter<<endl;
+                cout<<"temp: "<<temp->val<<endl;
+                counter++; // 4
+            }
+            if(prev && temp){
+                prev->next = temp->next;
+                delete temp;
+            }
+            if(prev == nullptr)
+            {
+                prev = temp->next;
+                head = prev;
+                delete temp;
+            }
+        }
+    }
+    return head;
+}
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+    int size = getSize(head); // 2
+    int pos = size - (n - 1); // 2 - (1 - 1) = 2
+    // pos = pos % size;
+    cout<<"Pos: "<<pos<<endl;
+    return deleteAtPos(head, pos);
+}
+
 int main()
 {
     ListNode* head = NULL;
-    vector<int> vecInt = {60, 22, 50, 40, 30, 15, 75, 55, 77};
+    // vector<int> vecInt = {60, 22, 50, 40, 30, 15, 75, 55, 77};
+    vector<int> vecInt = {1,2};
     head = createLinkedListUsingVector(head, vecInt);
     Display(head);
     
@@ -279,9 +399,15 @@ int main()
     // cout<<"After Sorting: "<<endl;
     // Display(head);
     
-    ListNode* middleNode = getMiddleNodeOfLinkedList(head);
-    cout<<"middleNode: "<<middleNode->val<<endl;
+    // ListNode* middleNode = getMiddleNodeOfLinkedList(head);
+    //cout<<"middleNode: "<<middleNode->val<<endl;
     // Display(head);
+    
+    // ListNode* reverseList = reverseBetween(head, 2, 4);
+    // Display(reverseList);
+
+    ListNode* headNode = removeNthFromEnd(head, 2);
+    Display(headNode);
 
     return(0);
 }

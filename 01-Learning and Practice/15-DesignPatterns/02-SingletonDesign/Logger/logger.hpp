@@ -7,10 +7,11 @@ class Logger{
     Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
+
     public:
     static int counter;
     static Logger* logger;
-    static Logger* getInstance();
+    static Logger* getLoggerInstance();
     void log(const std::string& msg);
 };
 

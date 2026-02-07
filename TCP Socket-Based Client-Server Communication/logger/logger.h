@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <mutex>
 
 #ifndef LOGGER_H // Header guard start
 #define LOGGER_H
@@ -18,9 +19,9 @@ enum LogLevel
 class Logger
 {
     ofstream logFile;               // File stream for the log file
-    string levelToString(LogLevel); // Converts log level to a string output
+    string levelToString(LogLevel) const; // Converts log level to a string output
+    mutable mutex mtx; // mutex for synchronizing log access
 
-public:
     Logger(const string &fileName)
     {
         logFile.open(fileName, ios::out | ios::trunc); // Open in truncate mode to clear previous logs
@@ -29,6 +30,23 @@ public:
         } else {
             logFile << "===== Log Started =====" << endl;
         }
+    }
+
+    public:
+
+    // Delete copy and copy assignment operator constructors
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+
+    // Delete move and move assignment operator constructors
+    Logger(Logger&&) = delete;
+    Logger& operator=(Logger&&) = delete;
+
+    // Singleton Accessor (thread-safe since C++11 guarantees static local init)
+    static Logger& getLoggerInstance(const string& filename = "logs.log")
+    {
+        static Logger instance(filename);
+        return instance;
     }
 
     void log(LogLevel, const string &);

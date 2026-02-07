@@ -17,7 +17,7 @@ int nMaxFd;
 int nSocket;
 int nArrClient[5];
 
-Logger logger("server_log.log");
+Logger& logger = Logger::getLoggerInstance("server_log.log");
 
 void ProcessNewMessage(int nClientSocket)
 {

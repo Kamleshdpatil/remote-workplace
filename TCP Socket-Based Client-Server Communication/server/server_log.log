@@ -1,9 +1,2 @@
 ===== Log Started =====
-[2025-07-24 21:05:09] INFO: ---------!!!  Server Program Started Running  !!!---------
-[2025-07-24 21:06:00] INFO: Inside the start of ProcessTheNewRequest
-[2025-07-24 21:07:13] INFO: Inside the start of ProcessNewMessage
-[2025-07-24 21:09:21] INFO: Inside the end of ProcessNewMessage
-[2025-07-24 21:10:03] INFO: Inside the start of ProcessTheNewRequest
-[2025-07-24 21:10:37] INFO: Inside the start of ProcessNewMessage
-[2025-07-24 21:11:58] INFO: Inside the end of ProcessNewMessage
-[2025-07-24 21:11:58] INFO: Inside the start of ProcessNewMessage
+[2025-09-07 14:50:06] INFO: ---------!!!  Server Program Started Running  !!!---------

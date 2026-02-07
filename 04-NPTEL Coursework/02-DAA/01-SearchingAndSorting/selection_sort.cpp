@@ -29,6 +29,22 @@ void Selection_sort(int arr[], int size)
     }
 }
 
+void Selection_sort_recursive(int arr[], int start, int end)
+{
+    if(start >= end-1)
+        return;
+    int minIndex = start;
+    for(int j = start + 1; j < end; j++)
+    {
+        if(arr[j] < arr[minIndex])
+            minIndex = j;
+    }
+    if(start != minIndex)
+        swap(arr[start], arr[minIndex]);
+    
+    return Selection_sort_recursive(arr, start + 1, end);
+}
+
 int main()
 {
     int arr[]={74, 32, 89, 55, 21, 64};
@@ -36,12 +52,11 @@ int main()
     cout<<"Before Sort: ";
     Display(arr, size);
 
-    Selection_sort(arr, size);
+    // Selection_sort(arr, size);
+    Selection_sort_recursive(arr, 0, size);
 
     cout<<"After Sort: ";
     Display(arr, size);
-
-
 
     return(0);
 }

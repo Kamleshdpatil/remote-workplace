@@ -20,16 +20,16 @@ int main(void)
     Stack* root = NULL;
 
     Push(&root, 10);
-    Push(&root, 20); 
-    Push(&root, 30); 
+    Push(&root, 20);
+    Push(&root, 30);
   
-    cout << Pop(&root) << " popped from stack\n"; 
+    cout << Pop(&root) << " popped from stack\n";
   
-    cout << "Top element is " << Peek(root) << endl; 
+    cout << "Top element is " << Peek(root) << endl;
       
     cout <<"Elements present in stack : ";
 
-     while(!IsEmpty(root)) 
+     while(!IsEmpty(root))
     { 
         // print top element in stack 
         cout << Peek(root) <<" "; 
