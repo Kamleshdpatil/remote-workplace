@@ -3,7 +3,7 @@ anywhere in the base class body whether its private,
 protected or public block. It works all the same.*/
 
 #include<iostream>
-#include<Cstdlib>
+#include<cstdlib>
 
 class CSky;
 
@@ -79,7 +79,7 @@ int main(void)
     CSky objSky;
     CSky *p = new CSky();
     CSparrow objSparrow;
-    //printCskyMembers(objSky);
+    // printCskyMembers(objSky);
     objSparrow.Display(objSky);
     objSparrow.Display(p);
     delete p;
@@ -88,8 +88,8 @@ int main(void)
 
     // objSparrow.Display(objSky);
     // objSky.SetData(10, 14.33);
-    //objSky.GetData(1.4f);
-    //objSky.GetData(1);
+    // objSky.GetData(1.4f);
+    // objSky.GetData(1);
 
     return(0);
 }
