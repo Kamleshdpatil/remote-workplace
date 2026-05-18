@@ -43,8 +43,20 @@ int main()
     // cout<<"Binary: "<<str<<endl;
     // cout<<"Decimal: "<<convertBinaryToDecimal(str)<<endl;
     
-    int a = 100, b = 200;
-    swapTwoNumbers(a, b);
-    cout<<"a: "<<a<<" b: "<<b<<endl;
+    // int a = 100, b = 200;
+    // swapTwoNumbers(a, b);
+    // cout<<"a: "<<a<<" b: "<<b<<endl;
+
+    int num = 0;
+    while(true){
+        cout<<"Enter a Numer to check even odd: ";
+        cin>>num;
+        if(num == 0)
+            return(0);
+        if(num & 1)
+            cout<<"Odd !!"<<endl;
+        else
+            cout<<"Even !!"<<endl;
+    }
     return 0;
 }
