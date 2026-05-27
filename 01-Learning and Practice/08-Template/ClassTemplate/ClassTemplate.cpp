@@ -5,18 +5,18 @@
 
 template<class myType>
 class myClass {
-    myType a, b;
+    myType standerd, stdunetCount;
 
 public:
     myClass(myType first, myType second)
     {
-        a = first;
-        b = second;
+        standerd = first;
+        stdunetCount = second;
     }
     myType getMax();
     /*myType getMax()
     {
-        return(a > b ? a : b);
+        return(standerd > stdunetCount ? standerd : stdunetCount);
     }*/
 };
 
@@ -24,7 +24,7 @@ template<class myType>
 myType myClass<myType>::getMax()
 {
     myType retVal;
-    retVal = a > b ? a : b;
+    retVal = standerd > stdunetCount ? standerd : stdunetCount;
     return(retVal);
 }
 
