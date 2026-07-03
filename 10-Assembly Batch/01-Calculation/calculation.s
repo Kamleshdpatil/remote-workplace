@@ -22,7 +22,7 @@ main:
     call    printf
     addl    $4, %esp
 
-    leal    -4(%ebp), %eax       #&no1
+    leal    -4(%ebp), %eax      #&no1
     leal    -8(%ebp), %ebx      #&no2
     pushl   %ebx                #address of no2
     pushl   %eax                #address of no1
