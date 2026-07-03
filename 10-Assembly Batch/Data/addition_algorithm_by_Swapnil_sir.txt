@@ -1,0 +1,24 @@
+Assembly file जरी मी तुम्हाला दिली नसली तरी त्याचा pseudo code, algorithm मात्र तुम्ही नक्कीच लिहू शकता. जसं की मी खाली लिहितोय. मात्र तुम्ही मी लिहिल्याचा वापर फक्त reference म्हणून करावा, तुम्ही स्वतः तुमच्या शब्दांत न बघता लिहावं अशी इच्छा.
+
+main:
+१. BP जिथे कुठे असेल तिथे परत जावं लागलं तर तो prev bp हवा म्हणून PUSH करणे.
+२. BP ला SP जवळ आणणे, कारण आपल्याला local variables हे BP च्या हिशोबाने access करायचे आहेत, SP च्या हिशोबाने करू शकत नाही कारण तो खाली-वर सरकत जाणार आहे (चंचल आहे).
+३. तीन integers (local variables) साठी SP १२ ने खाली सरकवणे.
+४. BP पासून खाली ४ आणि ८ अंतरावरची no1, no2 ची value register मध्ये घेऊन आधी no2 मग no1 PUSH करणे (जेणेकरून खालून आधी no1 दिसेल).
+(PUSH स्वतः SP खाली सरकवतोय आणि मग value push करतोय.)
+५. addition ला call करणे.
+(CALL instruction IP मधली जुनी value स्वतः PUSH करते आणि मग call च्या समोरचा address IP मध्ये टाकते.)
+६. call झाल्यावर SP आपण स्वतः वर घेतला ८ ने कारण आपण दोन parameters PUSH केले होते.(SP तेव्हा ४ + ४ = ८ ने खाली सरकला होता.)
+७. addition ने दिलेली return value EAX मधून ans (BP पासून खाली १२ अंतरावर) मध्ये टाकणे.
+८. function चं काम झाल्यावर exit(०) ने process संपवली, return ० ने नाही कारण आपण(execution control i.e IP) entry point function मध्ये आहोत आत्ता, आपल्याला कोणी caller नाही.
+
+addition:
+१. BP जिथे कुठे असेल तिथे परत जावं लागलं तर तो हवा म्हणून PUSH करणे.
+२. BP ला SP जवळ आणणे, कारण आपल्याला local variables BP च्या हिशोबाने access करायचे आहेत, SP च्या हिशोबाने करू शकत नाही कारण तो खाली-वर सरकत जाणार आहे (चंचल आहे).
+३. आत्ता BP/SP जिथे आहे तिथे stack वर previous bp stored आहे, BP पासून वर ४ अंतरावर prev ip stored आहे, वर ८ अंतरावर पहिला formal parameter म्हणजे no1 ची value आहे आणि वर १२ अंतरावर no2 ची value आहे.
+४. SP स्वतःच्या local variables साठी खाली सरकवायचा आणि formal parameters च्या values घेऊन काम करायचं आणि return value EAX मध्ये ठेवायची.
+५. जाताना SP वर BP पर्यंत आणायचा म्हणजे स्वतःचे local variables clear झाले.
+६. आता SP जिथे आहे तिथे prev bp असणार, तो POP करायचा म्हणजे ती value BP register मध्ये जाईल आणि POP मुळे SP ४ ने वर सरकेल. (PUSH च्या opposite काम)
+७. आता SP जिथे आहे तिथे prev ip आहे, ret instruction मुळे तो prev ip काढून IP register मध्ये ठेवला जाईल. आणि SP ४ ने वर सरकेल.
+८. म्हणजेच addition चं काम संपल्यावर SP आणि BP जिथे call होण्यापूर्वी होते, तिथे गेले.
+
