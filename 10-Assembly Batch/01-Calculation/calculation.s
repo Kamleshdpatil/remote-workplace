@@ -53,7 +53,7 @@ addition:
     pushl   %ebp
     movl    %esp, %ebp
 
-    subl    $4, %esp
+    subl    $4, %esp            #ans <-- -4(%ebp)  (Allocated by 'subl $4, %esp') <-- Current %esp
 
     movl    8(%ebp), %eax        #1st param
     movl    12(%ebp), %edx       #2nd param
