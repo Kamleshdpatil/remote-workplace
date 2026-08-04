@@ -41,7 +41,7 @@ fun1:
 
     # -- Print Values
     # movl    iNo1, %eax
-    # movl    iNo2, %ebx
+    # movl    iNo2, %edx
     pushl   iNo2
     pushl   iNo1
     pushl   $msg_print_values_in_fun
@@ -50,7 +50,8 @@ fun1:
 
     # -- Call fun2
     call    fun2
-
+    
+    # -- No need this two instructions when local variables are not there 
     movl    %ebp, %esp
     popl    %ebp
 
@@ -62,10 +63,12 @@ fun2:
     pushl   %ebp
     movl    %esp, %ebp
 
+    # -- Print Message
     pushl   $msg_print_static_fun2
     call    printf
     addl    $4, %esp
 
+    # -- No need this two instructions when local variables are not there
     movl    %ebp, %esp
     popl    %ebp
 
