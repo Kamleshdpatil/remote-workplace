@@ -35,7 +35,6 @@ main:
     pushl   %eax                # iAns1
     pushl   %ecx                # iNo2
     pushl   %eax                # iNo1
-    
     pushl   $msg_print
     call    printf
     addl    $20, %esp

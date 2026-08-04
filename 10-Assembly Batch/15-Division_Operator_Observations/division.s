@@ -55,7 +55,7 @@ main:
     movl    -8(%ebp), %eax      # Numerator(LSB)
     movl    -4(%ebp), %edx      # Numerator(MSB)
     movl    -12(%ebp), %ecx     # Denominator
-    # divl    %ecx
+    # divl    %ecx              # divl works only with unsigned
     idivl    %ecx
     
     movl    %eax, -16(%ebp)     # Qoutient
