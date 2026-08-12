@@ -114,7 +114,7 @@ label_do_section:
     # -- if(iCh > 0 && iCh < 5)
     movl    -16(%ebp), %eax         # iChoice
     cmpl    $0, %eax
-    jle      label_skip_enter_two_numbers
+    jle     label_skip_enter_two_numbers
     cmpl    $5, %eax
     jge     label_skip_enter_two_numbers
 
@@ -147,9 +147,9 @@ label_skip_enter_two_numbers:
     je      label_division          # case 4
 
     cmpl    $5, %eax
-    je      label_exit
+    je      label_exit              # case 5
 
-    jmp     label_default_to_continue          # case 5
+    jmp     label_default_to_continue     # default case     
 
 label_addition:
     movl    -8(%ebp), %ebx      # iNo2
@@ -203,7 +203,8 @@ label_default_to_continue:
     movl    $1, -16(%ebp)       # iChoice = 1
 
     # -- to continue
-    jmp     label_do_section
+    # jmp     label_do_section
+    jmp     label_while_condition
 
 label_print_result_and_trial:
     # -- print answer
@@ -224,6 +225,7 @@ label_print_result_and_trial:
     call    scanf
     addl    $8, %esp
 
+label_while_condition:
     movl    -16(%ebp), %eax     # iChoice
     cmpl    $1, %eax
     je      label_do_section
