@@ -8,6 +8,8 @@ struct demo
     short int shiNo;
 } obj1 = {'A', 10, 20};
 
+// one byte moment
+// object memory reading optimizations
 
 
 int main()
