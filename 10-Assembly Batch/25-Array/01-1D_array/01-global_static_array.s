@@ -62,7 +62,7 @@ main:
 
 label_statement_loo1:
     # -- enter element value
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter  // Optimized
     pushl   %eax
     pushl   $msg_enter_value_of_element
     call    printf
@@ -97,7 +97,7 @@ label_print_array1:
 
 label_statement_loop2:
     # -- enter element value
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter // Optimized
     movl    arr1(, %eax, 4), %edx
     pushl   %edx
     pushl   %eax
@@ -125,7 +125,7 @@ label_print_array2:
 
 label_statement_loop3:
     # -- enter element value
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter // Optimized
     movl    arr2(, %eax, 4), %edx
     pushl   %edx
     pushl   %eax

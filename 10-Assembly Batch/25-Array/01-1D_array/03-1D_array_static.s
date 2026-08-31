@@ -45,7 +45,7 @@ main:
 
 label_statement_loop1:
     # -- enter element value
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter
     pushl   %eax
     pushl   $msg_enter_value_of_element
     call    printf
@@ -79,7 +79,7 @@ label_print_entered_element:
     jmp     label_for_cond_loop2
 
 label_statement_loop2:
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter
     movl    -40(%ebp, %eax, 4), %edx
     pushl   %edx
     pushl   %eax

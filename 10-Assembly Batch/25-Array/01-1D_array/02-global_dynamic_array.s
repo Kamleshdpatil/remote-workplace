@@ -72,7 +72,7 @@ label_scan_array_element:
 
 label_statement_loo1:
     # -- enter element value
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter
     pushl   %eax
     pushl   $msg_enter_value_of_element
     call    printf
@@ -108,7 +108,7 @@ label_print_entered_element:
 
 label_statement_loop2:
     movl    pPtr, %edx
-    movl    -8(%ebp), %eax      # iCounter
+    # movl    -8(%ebp), %eax      # iCounter
     movl    (%edx, %eax, 4), %ecx
     pushl   %ecx
     pushl   %eax
