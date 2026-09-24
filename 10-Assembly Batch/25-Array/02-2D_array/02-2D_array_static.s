@@ -65,7 +65,7 @@ label_for_outer_loop_statement_loop1:
 
         # -- &arr[iCounter1][iCounter2]
         movl    $INT_SIZE, %eax
-        movl    $MAX, %ecx
+        movl    -4(%ebp), %ecx
         mull    %ecx
         movl    %eax, %ecx
 
@@ -119,7 +119,7 @@ label_for_outer_loop_statement_loop2:
 
         # -- print arr[iCounter1][iCounter2]
         movl    $INT_SIZE, %eax
-        movl    $MAX, %ecx
+        movl    -4(%ebp), %ecx
         mull    %ecx
         movl    %eax, %ecx
 
@@ -129,14 +129,14 @@ label_for_outer_loop_statement_loop2:
         leal    -416(%ebp), %ebx    # arr
         addl    %eax, %ebx
 
-        movl    -16(%ebp), %eax     # iCounter2
-        movl    (%ebx, %eax, 4), %edx
+        movl    -16(%ebp), %ecx     # iCounter2
+        movl    (%ebx, %ecx, 4), %edx
 
-        movl    -12(%ebp), %ebx     # iCounter1
+        # movl    -12(%ebp), %ebx     # iCounter1
 
         pushl   %edx
-        pushl   %eax                # iCounter2
-        pushl   %ebx
+        pushl   %ecx                # iCounter2
+        pushl   %eax
         pushl   $msg_print_index_element
         call    printf
         addl    $16, %esp
