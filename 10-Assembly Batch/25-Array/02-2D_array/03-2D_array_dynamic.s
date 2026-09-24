@@ -84,7 +84,8 @@ label_for_outer_loop_statement_loop1:
 
     addl    $4, %esp
 
-    cmpl    $NULL, -20(%ebp)
+    movl    (%ebx, %edx, 4), %eax
+    cmpl    $NULL, %eax
     je      label_mem_alloc_failed
     # --------------------------------
     
@@ -132,6 +133,8 @@ label_for_outer_loop_cond_loop1:
     movl    -4(%ebp), %edx      # iRows
     cmpl    %edx, %eax
     jl      label_for_outer_loop_statement_loop1
+
+    # -----loop end--------
 
     # -- Entered elements are: 
     pushl   $msg_entered_elements_are
