@@ -1,0 +1,10 @@
+===== Log Started =====
+[2026-05-27 01:57:24] INFO: ---------!!!  Server Program Started Running  !!!---------
+[2026-05-27 01:57:29] INFO: Inside the start of ProcessTheNewRequest
+[2026-05-27 01:57:38] INFO: Inside the start of ProcessNewMessage
+[2026-05-27 01:57:47] INFO: Inside the end of ProcessNewMessage
+[2026-05-27 01:58:06] INFO: Inside the start of ProcessNewMessage
+[2026-05-27 02:03:59] INFO: Inside the end of ProcessNewMessage
+[2026-05-27 02:04:12] INFO: Inside the start of ProcessNewMessage
+[2026-05-27 02:04:23] INFO: Inside the end of ProcessNewMessage
+[2026-05-27 17:06:50] INFO: Inside the start of ProcessNewMessage
