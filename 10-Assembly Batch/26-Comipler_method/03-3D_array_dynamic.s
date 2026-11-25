@@ -138,7 +138,7 @@ label_planes_statement_loop1:
 
             movl    $msg_scanf, (%esp)
             movl    %ebx, 4(%esp)
-            call scanf
+            call    scanf
             # -------------------------------------
 
             addl    $1, -24(%ebp)           # iCounter3++
